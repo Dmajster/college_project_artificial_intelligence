@@ -126,7 +126,7 @@ namespace Assets
             }
 
             var adjacencyMap = Map.MakeAdjacencyMatrix(Map);
-            var distanceMap = Map.MakeAdjacencyMatrix(Map);
+            var distanceMap = Map.MakeDistanceMatrix(Map);
             var heuristicsMap = Map.MakeHeuristicsArray();
 
             switch (Algorithm)
@@ -150,6 +150,21 @@ namespace Assets
                 {
                     Map.Tiles[tileIndex].GetComponent<MeshRenderer>().material.color = Color.blue;
                 }
+            }
+
+            if (Algorithm == PathfindingAlgorithm.Astar)
+            {
+                var gScore = 0;
+
+                for (var index = 0; index < SearchResult.Path.Length - 2; index++)
+                {
+                    var tileIndex = SearchResult.Path[index];
+                    var nextTileIndex = SearchResult.Path[index + 1];
+
+                    gScore += distanceMap[tileIndex][nextTileIndex];
+                }
+
+                Debug.Log(gScore);
             }
 
             for (var index = 0; index < SearchResult.Path.Length - 1; index++)
@@ -176,7 +191,7 @@ namespace Assets
             }
 
             var adjacencyMap = Map.MakeAdjacencyMatrix(Map);
-            var distanceMap = Map.MakeAdjacencyMatrix(Map);
+            var distanceMap = Map.MakeDistanceMatrix(Map);
             var heuristicsMap = Map.MakeHeuristicsArray();
 
             switch (Algorithm)
@@ -201,6 +216,21 @@ namespace Assets
                     Map.Tiles[tileIndex].GetComponent<MeshRenderer>().material.color = Color.blue;
                     yield return new WaitForSeconds(0.01f);
                 }
+            }
+
+            if (Algorithm == PathfindingAlgorithm.Astar)
+            {
+                var gScore = 0;
+
+                for (var index = 0; index < SearchResult.Path.Length - 2; index++)
+                {
+                    var tileIndex = SearchResult.Path[index];
+                    var nextTileIndex = SearchResult.Path[index + 1];
+
+                    gScore += distanceMap[tileIndex][nextTileIndex];
+                }
+
+                Debug.Log(gScore);
             }
 
             for (var index = 0; index < SearchResult.Path.Length - 1; index++)
